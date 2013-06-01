@@ -12,7 +12,7 @@ This is the Python 3 compatible version. A Python 2 package is available
 from the same Github repository.
 """
 
-import httplib
+import http.client
 import xmltodict
 
 
@@ -132,7 +132,7 @@ class FastSpringAPI(object):
             print(body)
             print('-'*80)
 
-        conn = httplib.HTTPSConnection(self.api_domain)
+        conn = http.client.HTTPSConnection(self.api_domain)
         conn.request(method, request_path, body)
         resp = conn.getresponse()
 
