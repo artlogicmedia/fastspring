@@ -133,7 +133,8 @@ class FastSpringAPI(object):
             print '-'*80
 
         conn = httplib.HTTPSConnection(self.api_domain)
-        conn.request(method, request_path, body)
+        headers = {"Content-type": "application/xml"}
+        conn.request(method, request_path, body, headers)
         resp = conn.getresponse()
 
         status = resp.status
