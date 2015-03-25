@@ -17,9 +17,16 @@ import xmltodict
 
 
 class FastSpringException(Exception):
-    
-    def __init__(self, status, message, reason):
-        self.status, self.message, self.reason = status, message, reason
+    """
+    Exception raised when the response from the FastSpring API is an error.
+
+    The status, message, and reason attributes are set to the values returned by
+    the API.
+    """
+
+    def __init__(self, error_msg, api_status, api_message, api_reason):
+        self.status, self.message, self.reason = api_status, api_message, api_reason
+        super(FastSpringException, self).__init__(error_msg)
 
 
 class FastSpringAPI(object):
@@ -40,7 +47,7 @@ class FastSpringAPI(object):
         Retrieve an order based on its reference ID. Returns a dict of
         order information on success.
 
-        Failure returns a FastSpringException.
+        Failure raises a FastSpringException.
         """
         content, status, message, reason = self._request('GET', 'order/%s' % reference)
         if content:
